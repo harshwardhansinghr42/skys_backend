@@ -9,6 +9,10 @@
 /test/tmp/
 /test/version_tmp/
 /tmp/
+/log/
+!/log/.keep
+!/tmp/.keep
+
 
 # Used by dotenv library to load environment variables.
 # .env
@@ -54,3 +58,10 @@ build-iPhoneSimulator/
 
 # Used by RuboCop. Remote config files pulled in from inherit_from directive.
 # .rubocop-https?--*
+
+#Ignore swagger json
+public/apidocs/api/v1
+public/apidocs/api-docs.json
+test
+.env
+/node_modules
