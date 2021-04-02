@@ -34,4 +34,6 @@ en:
   errors:
     user:
       email_or_phone_presence: 'or Phone must be present'
+      not_found: 'user not found'
+      otp_invalid: 'either otp is invalid or expired'
 

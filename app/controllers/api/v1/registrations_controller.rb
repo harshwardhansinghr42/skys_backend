@@ -1,24 +1,27 @@
+# frozen_string_literal: true
+
 module Api
-	module V1
-		class RegistrationsController < Api::V1::ApplicationController
-			before_action :request_user
-			def create
-				if @request_user.valid?
-					render json: @request_user
-				else
-					render json: { errors: error_messages(@request_user.errors) }
-				end
-			end
+  module V1
+    # otp verification controller
+    class RegistrationsController < Api::V1::ApplicationController
+      include Api::V1::Userable
+      before_action :request_user, :create_user
 
-			swagger_controller :registrations, 'User Registration',
-												 resource_path: 'api/v1/registrations'
+      def create
+        if @request_user.valid?
+          render json: @request_user
+        else
+          render_errors(@request_user)
+        end
+      end
 
-		  swagger_api :create do
-		    summary 'create user registration'
-		    param :form, 'user[email]', :string, :optional, 'Email'
-		    param :form, 'user[phone]', :string, :optional, 'Phone'
-		    response :unprocessable_entity
-		  end
-		end
-	end
+      swagger_controller :registrations, 'User Registration'
+
+      swagger_api :create do
+        summary 'create user registration'
+        param :form, 'email_or_phone', :string, :optional, 'Email'
+        response :unprocessable_entity
+      end
+    end
+  end
 end

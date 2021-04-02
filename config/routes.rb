@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   namespace :api do
   	namespace :v1 do
   		resource :registrations, only: [:create]
+  		resource :otp_verifications, only: [:create]
+  		resource :sessions, only: [:destroy]
   	end
   end
 end
