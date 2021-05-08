@@ -9,7 +9,7 @@ module Api
 
       def create
         if @request_user.valid?
-          render json: @request_user
+          render json: { user: @request_user }
         else
           render_errors(@request_user)
         end

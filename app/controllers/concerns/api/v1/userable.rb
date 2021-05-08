@@ -13,6 +13,7 @@ module Api
               .or(User.where(phone: params[:email_or_phone]))
               .first
         end
+        @request_user.update_otp if @request_user
       end
 
       # create user
