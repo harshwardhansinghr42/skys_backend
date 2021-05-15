@@ -10,6 +10,8 @@ class User < ApplicationRecord
   validates :email, uniqueness: true, allow_nil: true,
                     format: EMAIL_REGEX
 
+  has_many :razorpay_orders
+
   def otp_expired?
     (Time.now - otp_created_at) / 1.minutes > User::OTP_EXPIRY_TIME
   end

@@ -18,9 +18,7 @@ module Api
       end
 
       def create
-        response.set_header('Authorization',
-                            JsonWebToken.generate_token(@request_user.id))
-        render json: @request_user
+        render json: { AuthenticationToken: JsonWebToken.generate_token(@request_user.id) }
       end
 
       private

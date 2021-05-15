@@ -8,23 +8,13 @@ module Api
 
       # find user
       def request_user
+        return unless params[:email_or_phone].present?
+
         @request_user ||= begin
           User.where(email: params[:email_or_phone])
               .or(User.where(phone: params[:email_or_phone]))
               .first
         end
-        @request_user.update_otp if @request_user
-      end
-
-      # create user
-      def create_user
-        return unless @request_user.nil?
-
-        @request_user = if params[:email_or_phone].match(User::EMAIL_REGEX)
-                          User.create({ email: params[:email_or_phone] })
-                        else
-                          User.create({ phone: params[:email_or_phone] })
-                        end
       end
 
       # render if user is not found

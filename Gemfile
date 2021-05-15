@@ -35,6 +35,7 @@ gem 'rails-observers'
 gem 'strip_attributes'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'razorpay'
+gem 'city-state'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

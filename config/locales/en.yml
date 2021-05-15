@@ -36,4 +36,7 @@ en:
       email_or_phone_presence: 'or Phone must be present'
       not_found: 'user not found'
       otp_invalid: 'either otp is invalid or expired'
+      not_authenticated: 'invalid authentication token'
+    razorpay_order:
+      ss_or_pp_subscription_required: 'or pp_subscription_period is required'
 
