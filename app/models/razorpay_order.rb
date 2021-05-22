@@ -2,13 +2,6 @@
 
 # Razorpay Orders
 class RazorpayOrder < ApplicationRecord
-  enum ss_subscription_period: %i[one_year five_year ten_year], _prefix: true
-  enum pp_subscription_period: %i[one_year five_year ten_year], _prefix: true
-
-  validates :order_id, :user_name, :user_address, :user_city,
-            :user_state, :user_pincode, :user_phone, presence: true
-  validate :ss_or_pp_should_be_present
-
   # this amount is in paise not in rupees
   SS_SUBSCRIPTION_CHARGES = {
     'one_year' => 15_000,
@@ -22,8 +15,22 @@ class RazorpayOrder < ApplicationRecord
     'ten_year' => 130_000
   }.freeze
 
+  enum ss_subscription_period: %i[one_year five_year ten_year], _prefix: true
+  enum pp_subscription_period: %i[one_year five_year ten_year], _prefix: true
+
+  validates :order_id, :user_name, :user_address, :user_city,
+            :user_state, :user_pincode, :user_phone, presence: true
+  validate :ss_or_pp_should_be_present
+
   belongs_to :user
+  has_many :payment_successes
+
   before_validation :create_razorpay_order
+
+  # checkout amount = amount + 3% service tax
+  def calculate_amount
+    create_amount + create_amount * 0.03
+  end
 
   private
 

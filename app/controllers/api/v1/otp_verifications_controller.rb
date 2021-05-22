@@ -4,9 +4,9 @@ module Api
   module V1
     # otp verification controller
     class OtpVerificationsController < Api::V1::ApplicationController
-      include Api::V1::Userable
-      before_action :request_user, :user_not_found,
-                    :invalid_otp
+      include Api::V1::RequestUser
+      include Api::V1::UserNotFound
+      before_action :invalid_otp
 
       swagger_controller :otp_verifications, 'Otp Verification'
 

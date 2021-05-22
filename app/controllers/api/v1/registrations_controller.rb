@@ -4,8 +4,10 @@ module Api
   module V1
     # otp verification controller
     class RegistrationsController < Api::V1::ApplicationController
-      include Api::V1::Userable
-      before_action :request_user, :update_otp, :create_user
+      include Api::V1::RequestUser
+      include Api::V1::ErrorMessage
+
+      before_action :update_otp, :create_user
 
       def create
         if @request_user.valid?

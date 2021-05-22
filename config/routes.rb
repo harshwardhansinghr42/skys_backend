@@ -10,6 +10,8 @@ Rails.application.routes.draw do
       resources :states, only: [:index]
       resources :cities, only: [:index]
       resource :razorpay_orders, only: [:create]
+      resource :payment_successes, only: [:create]
+      resource :payment_failures, only: [:create]
     end
   end
 end

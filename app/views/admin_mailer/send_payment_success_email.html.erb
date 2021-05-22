@@ -1,0 +1,9 @@
+Hello Admin,
+<%= @razorpay_order.user_name %> has successfully bought the <%= admin_email_ss_pp_subscriptions(@razorpay_order) %> 
+Please find below address details and contact information.
+Name: <%= @razorpay_order.user_name %>
+Address: <%= @razorpay_order.user_address %>
+City: <%= @razorpay_order.user_city %>
+State: <%= @razorpay_order.user_state %>
+Pincode: <%= @razorpay_order.user_pincode %>
+Phone: <%= @razorpay_order.user_phone %>

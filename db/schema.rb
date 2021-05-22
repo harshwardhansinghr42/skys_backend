@@ -10,21 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_03_100254) do
+ActiveRecord::Schema.define(version: 2021_05_16_114958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "payment_successes", force: :cascade do |t|
+    t.string "razorpay_payment_id"
+    t.string "razorpay_signature"
+    t.boolean "signature_verified", default: false
+    t.bigint "razorpay_order_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["razorpay_order_id"], name: "index_payment_successes_on_razorpay_order_id"
+  end
+
   create_table "razorpay_orders", force: :cascade do |t|
     t.string "order_id", null: false
-    t.integer "ss_subscription_plan"
-    t.integer "pp_subscription_plan"
-    t.string "user_name", null: false
-    t.string "user_address", null: false
-    t.string "user_city", null: false
-    t.string "user_state", null: false
-    t.string "user_pincode", null: false
-    t.string "user_phone", null: false
+    t.integer "ss_subscription_period"
+    t.integer "pp_subscription_period"
+    t.string "user_name"
+    t.string "user_address"
+    t.string "user_city"
+    t.string "user_state"
+    t.string "user_pincode"
+    t.string "user_phone"
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

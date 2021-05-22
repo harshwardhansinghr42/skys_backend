@@ -5,6 +5,9 @@ module Api
     # authentication
     module Authentication
       extend ActiveSupport::Concern
+      included do
+        before_action :authenticate_user!
+      end
 
       def authenticate_user!
         return if valid_token?

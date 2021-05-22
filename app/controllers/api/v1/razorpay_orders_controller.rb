@@ -4,7 +4,8 @@ module Api
   module V1
     # razorpay orders controller
     class RazorpayOrdersController < Api::V1::ApplicationController
-      before_action :authenticate_user!
+      include Api::V1::Authentication
+      include Api::V1::ErrorMessage
 
       swagger_controller :razorpay_orders, 'Razorpay Orders'
 
