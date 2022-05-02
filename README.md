@@ -1,24 +1,22 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Intro
 
-Things you may want to cover:
+* This app uses Ruby on Rails 7, Postgres, Razorpay Payment Gateway.
 
-* Ruby version
+* Backend Api Server for skys subscription web application
 
-* System dependencies
 
-* Configuration
+# Setup
 
-* Database creation
+* git clone https://github.com/harshwardhansinghr42/skys_backend.git
 
-* Database initialization
+* cd skys_backend
 
-* How to run the test suite
+* bundle install
 
-* Services (job queues, cache servers, search engines, etc.)
+* rake db:create
 
-* Deployment instructions
+* rake db:migrate
 
-* ...
+* rails s
