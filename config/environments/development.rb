@@ -30,6 +30,9 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  # Now the rendered HTML will contain comment indicating the beginning and end of each template
+  config.action_view.annotate_rendered_view_with_filenames = true
+
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 

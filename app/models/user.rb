@@ -17,7 +17,7 @@ class User < ApplicationRecord
   end
 
   def update_otp
-    self.otp = rand(1000...9999)
+    self.otp = GenericHelpers.otp
     self.otp_created_at = Time.now
     save!
   end

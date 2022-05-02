@@ -5,6 +5,7 @@ module Api
     # razorpay orders controller
     class RazorpayOrdersController < Api::V1::ApplicationController
       include Api::V1::Authentication
+      include Api::V1::Authorization
       include Api::V1::ErrorMessage
 
       swagger_controller :razorpay_orders, 'Razorpay Orders'
@@ -12,6 +13,7 @@ module Api
       swagger_api :create do
         summary 'create razorpay orders'
         param :header, 'AuthenticationToken', :string, :required, 'Authentication token'
+        param :path, 'id', :integer, :required, 'user id'
         param_list :form, 'ss_subscription_period', :string, :optional,
                    'sanghshakti subscription period', %i[one_year five_year ten_year]
         param_list :form, 'pp_subscription_period', :string, :optional,
@@ -25,6 +27,13 @@ module Api
         response :unprocessable_entity
       end
 
+      swagger_api :index do
+        summary 'fetch razorpay orders'
+        param :header, 'AuthenticationToken', :string, :required, 'Authentication token'
+        param :path, 'id', :integer, :required, 'user id'
+        response :unprocessable_entity
+      end
+
       def create
         razorpay_order = @current_user.razorpay_orders.new(razorpay_orders_params)
         if razorpay_order.save
@@ -34,6 +43,13 @@ module Api
         else
           render_errors(razorpay_order)
         end
+      end
+
+      def index
+        orders = @current_user.razorpay_orders.joins(:payment_successes)
+        orders_response = ActiveModel::SerializableResource.new(orders,
+                                                                each_serializer: OrderListResponseSerializer)
+        render json: { orders: orders_response.as_json }
       end
 
       private

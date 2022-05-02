@@ -2,21 +2,8 @@
 
 # Razorpay Orders
 class RazorpayOrder < ApplicationRecord
-  # this amount is in paise not in rupees
-  SS_SUBSCRIPTION_CHARGES = {
-    'one_year' => 15_000,
-    'five_year' => 70_000,
-    'ten_year' => 130_000
-  }.freeze
-
-  PP_SUBSCRIPTION_CHARGES = {
-    'one_year' => 15_000,
-    'five_year' => 70_000,
-    'ten_year' => 130_000
-  }.freeze
-
-  enum ss_subscription_period: %i[one_year five_year ten_year], _prefix: true
-  enum pp_subscription_period: %i[one_year five_year ten_year], _prefix: true
+  enum ss_subscription_period: Subscription::SS_SUBSCRIPTION.keys, _prefix: true
+  enum pp_subscription_period: Subscription::PP_SUBSCRIPTION.keys, _prefix: true
 
   validates :order_id, :user_name, :user_address, :user_city,
             :user_state, :user_pincode, :user_phone, presence: true
@@ -29,7 +16,7 @@ class RazorpayOrder < ApplicationRecord
 
   # checkout amount = amount + 3% service tax
   def calculate_amount
-    create_amount + create_amount * 0.03
+    (create_amount + create_amount * 0.03).to_i
   end
 
   private
@@ -43,14 +30,14 @@ class RazorpayOrder < ApplicationRecord
   def create_razorpay_order
     return if order_id
 
-    order = Razorpay::Order.create amount: create_amount, currency: 'INR'
+    order = Razorpay::Order.create amount: calculate_amount, currency: 'INR'
     self.order_id = order.id
   end
 
   def create_amount
     amount = 0
-    amount += SS_SUBSCRIPTION_CHARGES[ss_subscription_period] if ss_subscription_period
-    amount += PP_SUBSCRIPTION_CHARGES[pp_subscription_period] if pp_subscription_period
+    amount += Subscription::SS_SUBSCRIPTION[ss_subscription_period] if ss_subscription_period
+    amount += Subscription::PP_SUBSCRIPTION[pp_subscription_period] if pp_subscription_period
     amount
   end
 end

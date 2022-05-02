@@ -11,13 +11,17 @@ module Api
 
       # find user
       def request_user
-        return unless params[:email_or_phone].present?
+        return unless params[:email_or_phone].present? || params[:id].present?
 
-        @request_user ||= begin
-          User.where(email: params[:email_or_phone])
-              .or(User.where(phone: params[:email_or_phone]))
-              .first
+        if params[:email_or_phone].present?
+          @request_user ||= begin
+            User.where(email: params[:email_or_phone])
+                .or(User.where(phone: params[:email_or_phone]))
+                .first
+          end
         end
+
+        @request_user ||= User.find_by(id: params[:id]) if params[:id].present?
       end
     end
   end

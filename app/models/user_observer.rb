@@ -3,7 +3,7 @@
 # user observer
 class UserObserver < ActiveRecord::Observer
   def before_create(user)
-    user.otp = rand(1000...9999)
+    user.otp = GenericHelpers.otp
     user.otp_created_at = Time.now
   end
 

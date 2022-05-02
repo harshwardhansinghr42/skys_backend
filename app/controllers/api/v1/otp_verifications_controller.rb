@@ -12,8 +12,8 @@ module Api
 
       swagger_api :create do
         summary 'user otp verification'
-        param :form, 'email_or_phone', :string, :optional, 'Email'
-        param :form, 'otp', :string, :optional, 'otp'
+        param :path, 'id', :integer, :required, 'user id'
+        param :form, 'otp', :string, :required, 'otp'
         response :unprocessable_entity
       end
 

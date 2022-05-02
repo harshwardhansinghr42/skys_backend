@@ -12,6 +12,7 @@ module Api
       swagger_api :create do
         summary 'create payment successes'
         param :header, 'AuthenticationToken', :string, :required, 'Authentication token'
+        param :path, 'id', :integer, :required, 'razorpay order id'
         param :form, 'razorpay_payment_id', :string, :required, 'razorpay response payment id'
         param :form, 'razorpay_order_id', :string, :required, 'razorpay response order id'
         param :form, 'razorpay_signature', :string, :required, 'razorpay response signature'
@@ -30,7 +31,7 @@ module Api
       private
 
       def razorpay_order
-        @razorpay_order = RazorpayOrder.find_by(order_id: params[:razorpay_order_id])
+        @razorpay_order = RazorpayOrder.find_by(id: params[:id])
         return if @razorpay_order
 
         render json: { errors: I18n.t('errors.razorpay_order.not_found') },
